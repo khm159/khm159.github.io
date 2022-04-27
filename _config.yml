@@ -20,7 +20,7 @@ title                    : "HyungminKim Blog"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Hyungmin Kim"
-description              : "AI모델을 실 생활 속으로."
+description              : "구직중입니다."
 url                      : "https://khm159.github.io/" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
