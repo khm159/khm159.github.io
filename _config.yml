@@ -117,9 +117,6 @@ author:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/khm159"
-    #- label: "Instagram"
-    #  icon: "fab fa-fw fa-instagram"
-      # url: "https://instagram.com/"
 
 # Site Footer
 footer:
@@ -282,3 +279,4 @@ defaults:
       comments: # true
       share: true
       related: true
+      sidebar_main: true
