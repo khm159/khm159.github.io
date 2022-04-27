@@ -103,7 +103,7 @@ analytics:
 # Site Author
 author:
   name             : "Hyungmin Kim"
-  avatar           : "/images/profile.jpg"
+  avatar           : "/profile/portrait.jpg"
   bio              : "AI모델을 실 생활 속으로."
   location         : "Deajeon, Korea."
   email            :
