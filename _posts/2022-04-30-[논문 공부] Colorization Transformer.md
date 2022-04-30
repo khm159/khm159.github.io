@@ -43,7 +43,15 @@ Image colorization 및 생성 모델 관련 논문은 처음 보는 것이라 �
    
    LAB image space 라고 가정했을 때, 우리는 흑백 영상의 분포를 알고 있으므로, 학습 샘플들로 Conditional distribusion ![eq001](/assets/posts/colorization_transformer/eq_001.png) 를 모델링 하는것이 목표.
 
-   Conditional distribusion ![eq001](/assets/posts/colorization_transformer/eq_001.png)를 구하려면, X^L은 이미 알고 있으므로(학습), endocer는 CNN이니까 receptive field 안에서, 각 픽셀별로 n개의 픽셀(시행)에 대해서 [조건부 확률의 연쇄법칙(Chain rule for conditional probability)](https://blog.naver.com/PostView.naver?blogId=mykepzzang&logNo=220834907530&parentCategoryNo=&categoryNo=38&viewDate=&isShowPopularPosts=false&from=postView)에 의해서
+   Conditional distribusion ![eq001](/assets/posts/colorization_transformer/eq_001.png)를 구하려면, 
+   
+   X^L은 given이고, GT(X^ab)도 아니까 모델을 찾을수 있다는 말이고 모델을 찾기 위해서 Conditional distribution을 정의함.
+
+   여기서는 X^ab의 픽셀 값을 이전 연구처럼 deterministic 하게 추정하지 않고 샘플링하는데, 즉 VAE 처럼 일단 파라미터라이제이션 하고 hidden에서 샘플링하는데, 이때 softmax로 0~255 사이의 값(8bit)을 뽑는다. continual이 아니기 때문에 log-likelihood estimation은 멀티누이 분포를 가정하고 했다는 말이다.    
+   
+   Conditional distribution을 구할때는, 
+
+   각 픽셀별로 n개의 픽셀(시행)에 대해서 [조건부 확률의 연쇄법칙(Chain rule for conditional probability)](https://blog.naver.com/PostView.naver?blogId=mykepzzang&logNo=220834907530&parentCategoryNo=&categoryNo=38&viewDate=&isShowPopularPosts=false&from=postView)에 의해서
 
    L 채널에서 a,b 채널로의 조건부 확률을 다음과 같이 나타낼 수 있다. 
 
@@ -82,12 +90,12 @@ log-likelihood estimation" 라고 한것 같다.
    
    원리는 동일한데, PixelCNN+는 나중에 더 봐야할듯. 
 
-   일단, PixelCNN이 아니라 PixelCNN+를 사용하긴 했는데, 개념은 비슷하니 다음에 본 논문 다루어볼때 하기로 하고 이쯤 넘어가자... 
+   일단 Colorization transformer에서는 PixelCNN이 아니라 PixelCNN+를 사용하긴 했는데, 개념은 비슷하니 다음에 본 논문 다루어볼때 하기로 하고 이쯤 넘어가자... 
 
    다음에 이 논문도 리뷰 해야 할듯. 
 
 
-방금 전 본 것 처럼, 최근 방법들은 대부분 probablistic model. 이전 deterministic 한 방법보다 장점있어서 널리 적용됨.
+방금 전 본 것 처럼, 최근 colorization 방법들은 대부분 probablistic model. 이전 deterministic 한 방법보다 장점있어서 널리 적용됨.
 
 #### 1.2 Colorization Transformer 
 
