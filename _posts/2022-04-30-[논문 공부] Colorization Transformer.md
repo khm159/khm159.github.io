@@ -85,8 +85,11 @@ Image colorization 및 생성 모델 관련 논문은 처음 보는 것이라 �
 
    그런 식으로!!! ![eq06](/assets/posts/colorization_transformer/eq_006.png) X^L 로부터 X^ab를 prediction 한다는 것 같다. 
 
+   그거를 굳이 수식으로 쓰면 ![eq07](/assets/posts/colorization_transformer/eq_007.png) 이렇게 된다.
+
    그래서 논문에서 "The current state-of-the-art in automated colorization are neural generative approaches based on
 log-likelihood estimation" 라고 한것 같다. 
+
    
    원리는 동일한데, PixelCNN+는 나중에 더 봐야할듯. 
 
