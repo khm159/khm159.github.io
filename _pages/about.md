@@ -6,11 +6,9 @@ toc_label: "Contents of me"
 layout: archive
 ---
 
-# Profile
+# Hyungmin Kim.
 
-- Hyungmin Kim.
-
-데이터로 세상속의 문제를 해결하고, 실생활에 적용하고 싶어하는 개발자 이자 연구자인 김형민이라고 합니다. 
+데이터로 세상속의 문제를 해결하고, 실생활에 적용하고자 노력하는 개발자 이자 연구자인 김형민이라고 합니다. 
 
 # 1. Education
 
