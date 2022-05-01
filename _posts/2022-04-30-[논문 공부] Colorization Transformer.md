@@ -118,10 +118,10 @@ axial self-attention block의 장점은 global receptive field를 저렴한 비�
 
 한번에 colorization 하기 힘드니 low resolution으로 먼저 하고 super resolution한다는 뜻. 
 
+## 2. Background: Axial Transformer 
 
 
 
-## 2. 제안된 방법 
 
 
 
