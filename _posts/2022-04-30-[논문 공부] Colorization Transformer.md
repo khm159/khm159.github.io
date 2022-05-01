@@ -120,6 +120,9 @@ axial self-attention block의 장점은 global receptive field를 저렴한 비�
 
 ## 2. Background: Axial Transformer 
 
+그렇다 이 논문을 보기 전에 또 Axial Trnasformer를 알아야한다. 
+
+
 
 
 
