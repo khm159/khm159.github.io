@@ -98,12 +98,33 @@ log-likelihood estimation" 라고 한것 같다.
    다음에 이 논문도 리뷰 해야 할듯. 
 
 
-방금 전 본 것 처럼, 최근 colorization 방법들은 대부분 probablistic model. 이전 deterministic 한 방법보다 장점있어서 널리 적용됨.
+방금 전 본 것 처럼, 최근 colorization 방법들은 대부분 probabilistic model. 이전 deterministic 한 방법보다 장점있어서 널리 적용됨.
 
 #### 1.2 Colorization Transformer 
 
+Colorization Transformer(ColTran)도 앞서 간단히 살펴본 probabilistic corolization 모델이다.
 
-## 2. 제안된 방법 
+Transformer 구조이며 [axial self-attention block](https://arxiv.org/abs/1912.12180)으로 transformer 구성. 
+
+axial self-attention block의 장점은 global receptive field를 저렴한 비용으로 얻을 수 있다는 점이다.(자세한 이야기 논문참조)
+
+한번에 high resolution의 gray-scale 영상을 colorization하는 것은 어렵고 연산량도 많기 때문에, 3개의 하위 sub task로 분리. 
+
+- Coarse low resolution aotoregressive solorization
+
+- parallel colorsuper-resolution
+
+- spatial super-resolution 
+
+한번에 colorization 하기 힘드니 low resolution으로 먼저 하고 super resolution한다는 뜻. 
+
+## 2. Background: Axial Transformer 
+
+그렇다 이 논문을 보기 전에 또 Axial Trnasformer를 알아야한다. 
+
+
+
+
 
 
 
