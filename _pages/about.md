@@ -6,13 +6,17 @@ toc_label: "Contents of me"
 layout: archive
 ---
 
-# Hyungmin Kim.
-
 데이터로 세상속의 문제를 해결하고, 실생활에 적용하고자 노력하는 개발자 이자 연구자인 김형민이라고 합니다. 
 
 # 1. Education
 
-SKT AI Fellowship 지원중으로 비공개 전환
+  ![ust](/profile/ust.png)
+
+  -  2020.09 ~ current : In Master course, Artificial Intelligence, University of Science and Technology in korea(UST). 
+
+  ![tukorea](/profile/tukorea.png)  
+
+  - 2013.03 ~ 2020.02 : Bachelor degree, Mechatronics, Tech University of Korea(TUKorea). 
 
 # 2. Publication
 
