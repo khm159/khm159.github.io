@@ -12,13 +12,7 @@ layout: archive
 
 # 1. Education
 
-  ![ust](/profile/ust.png)
-
-  -  2020.09 ~ current : In Master course, Artificial Intelligence, University of Science and Technology in korea(UST). 
-
-  ![tukorea](/profile/tukorea.png)  
-
-  - 2013.03 ~ 2020.02 : Bachelor degree, Mechatronics, Tech University of Korea(TUKorea). 
+SKT AI Fellowship 지원중으로 비공개 전환
 
 # 2. Publication
 
