@@ -156,7 +156,9 @@ spatial dimension은 동일하다.(어텐션 맵을 생성해야 하니)
 
 - Affinity Operation 
 
-Criss-cross attention의 핵심 연산이라고 볼 수 있음. 어텐션 맵 ![crisscross4](/assets/posts/corolization_transformer/crisscross4.png) 를 생성. 
+Criss-cross attention의 핵심 연산이라고 볼 수 있음. 어텐션 맵 
+
+![crisscross4](/assets/posts/colorization_transformer/crisscross4.png) 를 생성. 
 
 어떤식으로 하나 궁금해서 [공식 torch 구현](https://github.com/speedinghzl/CCNet/blob/master/cc_attention/functions.py)의 forward 부분만을 가져옴 
 
@@ -186,11 +188,11 @@ Criss-cross attention의 핵심 연산이라고 볼 수 있음. 어텐션 맵 ![
 
 [B*W, H, C'], [B*H, W, C'] 와 같이 reshaping 한다음에 [bmm](https://kh-kim.gitbook.io/natural-language-processing-with-pytorch/00-cover-9/03-attention)하는식으로 접근한다.
 
-![bmm]((/assets/posts/corolization_transformer/bmm.png)
+![bmm](/assets/posts/colorization_transformer/bmm.png)
 
-![crisscross01](/assets/posts/corolization_transformer/crisscross5.PNG)
+![crisscross01](/assets/posts/colorization_transformer/crisscross5.PNG)
 
-![crisscross02](/assets/posts/corolization_transformer/crisscross6.PNG)
+![crisscross02](/assets/posts/colorization_transformer/crisscross6.PNG)
 
 그려보면 이런식이라고 보면 된다. 
 
