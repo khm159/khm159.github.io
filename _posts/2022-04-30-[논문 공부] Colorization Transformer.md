@@ -122,15 +122,33 @@ axial self-attention block의 장점은 global receptive field를 저렴한 비�
 
 Axial transformer는 각 row 및 column 단위로 어텐션을 한다는 점에서 생성할 픽셀들을 연속적으로 생성하는 Image colorization에 적합한 방식이라 생각해서 사용된것 같다. 
 
-Axial transformer는 원래는 Criss-Cross 네트워크에 영감을 받아 시작되었다.
+#### 2.1 Criss-Cross Network 
+
+[Zilong Huang et al. "CCNet:Criss-Cross Attention for Semantic Segmentatioin", 2020](https://arxiv.org/pdf/1811.11721v2.pdf)
+
+Axial transformer는 Criss-Cross 네트워크에 영감을 받아 시작되었다.
 
 ![crisscross](/assets/posts/colorization_transformer/crisscross.png)
+
+그 개념은 원래 FCN(Fully Convolutional Network)에서 (컨볼루션 기반의 고질적인 특징인) short-range receptive field만을 가지게 되는 한계점을 극복하기 위해 등장했다.  
+
+이를 극복하기 위한 방법은 [non-local](https://openaccess.thecvf.com/content_cvpr_2018/papers/Wang_Non-Local_Neural_Networks_CVPR_2018_paper.pdf) 모듈과 같이 attention을 이용해 모든 픽셀을 densely aggregation 하는 것이다. 
+
+그러나 이는 attention map을 모든 픽셀 끼리 연상해야 하기 때문에 연산 복잡도가 굉장히 크다 (O(N^2))
+
+
+
+
+
 
 
 ## 유용한 참고자료 
 
-[오토인코더의 모든것 시리즈](https://www.youtube.com/watch?v=o_peo6U7IRM)
+- [오토인코더의 모든것 시리즈](https://www.youtube.com/watch?v=o_peo6U7IRM)
 
+- [Criss-Cross Network(Paper with Code)](https://paperswithcode.com/method/ccnet)
+
+- [Axial Attention(Paper with Code)](https://paperswithcode.com/method/axial)
 
 
 
