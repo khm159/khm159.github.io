@@ -88,7 +88,6 @@ Image colorization 및 생성 모델 관련 논문은 처음 보는 것이라 �
 
    그래서 논문에서 "The current state-of-the-art in automated colorization are neural generative approaches based on
 log-likelihood estimation" 라고 한것 같다. 
-
    
    원리는 동일한데, PixelCNN+는 나중에 더 봐야할듯. 
 
@@ -120,6 +119,12 @@ axial self-attention block의 장점은 global receptive field를 저렴한 비�
 ## 2. Background: Axial Transformer 
 
 그렇다 이 논문을 보기 전에 또 Axial Trnasformer를 알아야한다. 
+
+Axial transformer는 각 row 및 column 단위로 어텐션을 한다는 점에서 생성할 픽셀들을 연속적으로 생성하는 Image colorization에 적합한 방식이라 생각해서 사용된것 같다. 
+
+Axial transformer는 원래는 Criss-Cross 네트워크에 영감을 받아 시작되었다.
+
+![crisscross](/assets/post/colorization_transformer/crisscross.png)
 
 
 ## 유용한 참고자료 
