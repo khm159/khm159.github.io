@@ -10,11 +10,6 @@ tags:
     - "Generation Model"
 ---
 
-
-# This post is Work In Progress.
-
-의식의 흐름주의! 
-
 # Colorization Transformer
 
 오늘 읽은 논문은 
@@ -33,6 +28,8 @@ Image colorization 및 생성 모델 관련 논문은 처음 보는 것이라 �
 #### 1.1 Neural generative approach-based Image Colorization Methods
 
 아래 소개된 논문들은 나중에 더 자세히 공부할 예정 우선은 메인 컨셉만 확인.
+
+요즘 Colorization model은 probabilistic한 방법을 사용하기 때문에 아래 논문을 추가적으로 살펴봄. 
 
 - [Amelie Royer et al. "Probabilistic Image Colorization", BMVC, 2017]("https://arxiv.org/pdf/1705.04258.pdf")
 
@@ -81,9 +78,11 @@ Image colorization 및 생성 모델 관련 논문은 처음 보는 것이라 �
 
    Maximum likelihood를 향해 학습(negative loglikelihood minimization) 하겠다는것 같다. 
 
-   crossentrophy loss 최적화 한다고 했으니 확률분포는 멀티누이 분포(Multinoulii distribution)를 가정했다느것 같다... 
+   그걸 다음 픽셀을 생성하면서 sequantial하게 연속적으로 conditional distribution을 정의하면서 말이다. 
 
-   그런 식으로!!! ![eq06](/assets/posts/colorization_transformer/eq_006.png) X^L 로부터 X^ab를 prediction 한다는 것 같다. 
+   crossentrophy loss 최적화 한다고 했으니 확률분포는 멀티누이 분포(Multinoulii distribution)를 가정했따는 말이고, 
+
+   그런 식으로!!! ![eq06](/assets/posts/colorization_transformer/eq_006.png) X^L 로부터 X^ab를 prediction 한다. 
 
    그거를 굳이 수식으로 쓰면 ![eq07](/assets/posts/colorization_transformer/eq_007.png) 이렇게 된다.
 
@@ -121,11 +120,6 @@ axial self-attention block의 장점은 global receptive field를 저렴한 비�
 ## 2. Background: Axial Transformer 
 
 그렇다 이 논문을 보기 전에 또 Axial Trnasformer를 알아야한다. 
-
-
-
-
-
 
 
 ## 유용한 참고자료 
