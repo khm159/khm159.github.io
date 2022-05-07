@@ -124,7 +124,7 @@ Axial transformer는 각 row 및 column 단위로 어텐션을 한다는 점에�
 
 Axial transformer는 원래는 Criss-Cross 네트워크에 영감을 받아 시작되었다.
 
-![crisscross](/assets/post/colorization_transformer/crisscross.png)
+![crisscross](/assets/posts/colorization_transformer/crisscross.png)
 
 
 ## 유용한 참고자료 
