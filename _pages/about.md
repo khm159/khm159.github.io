@@ -60,14 +60,20 @@ layout: archive
   ![falldown2](/profile/project_cctv/falldown04.gif)
 
   **Loitering**
+
+  ![loitering](/profile/project_cctv/loitering.gif)
   
   **Intrusion**
+
+  ![inttrusion](/profile/project_cctv/intrusion.gif)
 
 # 5. Develop Project in person
 
 ## Computer-Vision Applications
 
-  - 2022.05 ~ current : Pose estimation-based visual application project.
+![pose_demo](/profile/pose.gif)
+
+work in progress.
 
 
 # 6. Contact
