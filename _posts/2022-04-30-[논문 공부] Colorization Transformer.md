@@ -122,7 +122,9 @@ axial self-attention block의 장점은 global receptive field를 저렴한 비�
 
 Axial transformer는 각 row 및 column 단위로 어텐션을 한다는 점에서 생성할 픽셀들을 연속적으로 생성하는 Image colorization에 적합한 방식이라 생각해서 사용된것 같다. 
 
-#### 2.1 Criss-Cross Network 
+#### 3.1 Row and Column self-attention 
+
+**Criss-Cross Attention(Axial Attention)**
 
 [Zilong Huang et al. "CCNet:Criss-Cross Attention for Semantic Segmentatioin", 2020](https://arxiv.org/pdf/1811.11721v2.pdf)
 
@@ -134,7 +136,67 @@ Axial transformer는 Criss-Cross 네트워크에 영감을 받아 시작되었�
 
 이를 극복하기 위한 방법은 [non-local](https://openaccess.thecvf.com/content_cvpr_2018/papers/Wang_Non-Local_Neural_Networks_CVPR_2018_paper.pdf) 모듈과 같이 attention을 이용해 모든 픽셀을 densely aggregation 하는 것이다. 
 
-그러나 이는 attention map을 모든 픽셀 끼리 연상해야 하기 때문에 연산 복잡도가 굉장히 크다 (O(N^2))
+그러나 이는 attention map을 모든 픽셀 끼리 연산해야 하기 때문에 연산 복잡도가 굉장히 크다 (O(N^2))
+
+(CCNet 논문에서는 이를 픽셀들을 node로 본 GNN(Graph Neural Network) 형태라고 설명)
+
+semantic segmentation과 같은 **high resolution feature가 필요한 분야**에서는 이는 좋지 않다. 
+
+전체 픽셀로 attention map을 생성하지 않고 horizontal, vertical 방향(각 픽셀이 속한 column, row)에 대해서 연속적으로 attention.
+
+![crisscross2](/assets/posts/colorization_transformer/crisscross2.png)
+
+[self-attention](https://arxiv.org/abs/1706.03762)이므로 QKV 생성을 한다. 
+
+- 먼저 linear projection(1x1 Convolution)을 통해 Q, K, V 생성. (C'는 dimension reduction시 감소된 차원. 아닐경우 입력과 동일)
+
+![crisscross3](/assets/posts/colorization_transformer/crisscross3.png)
+
+spatial dimension은 동일하다.(어텐션 맵을 생성해야 하니)
+
+- Affinity Operation 
+
+Criss-cross attention의 핵심 연산이라고 볼 수 있음. 어텐션 맵 ![crisscross4](/assets/posts/corolization_transformer/crisscross4.png) 를 생성. 
+
+어떤식으로 하나 궁금해서 [공식 torch 구현](https://github.com/speedinghzl/CCNet/blob/master/cc_attention/functions.py)의 forward 부분만을 가져옴 
+
+     def forward(self, x):
+        m_batchsize, _, height, width = x.size()
+        proj_query = self.query_conv(x)
+        proj_query_H = proj_query.permute(0,3,1,2).contiguous().view(m_batchsize*width,-1,height).permute(0, 2, 1)
+        proj_query_W = proj_query.permute(0,2,1,3).contiguous().view(m_batchsize*height,-1,width).permute(0, 2, 1)
+        proj_key = self.key_conv(x)
+        proj_key_H = proj_key.permute(0,3,1,2).contiguous().view(m_batchsize*width,-1,height)
+        proj_key_W = proj_key.permute(0,2,1,3).contiguous().view(m_batchsize*height,-1,width)
+        proj_value = self.value_conv(x)
+        proj_value_H = proj_value.permute(0,3,1,2).contiguous().view(m_batchsize*width,-1,height)
+        proj_value_W = proj_value.permute(0,2,1,3).contiguous().view(m_batchsize*height,-1,width)
+        energy_H = (torch.bmm(proj_query_H, proj_key_H)+self.INF(m_batchsize, height, width)).view(m_batchsize,width,height,height).permute(0,2,1,3)
+        energy_W = torch.bmm(proj_query_W, proj_key_W).view(m_batchsize,height,width,width)
+        concate = self.softmax(torch.cat([energy_H, energy_W], 3))
+
+        att_H = concate[:,:,:,0:height].permute(0,2,1,3).contiguous().view(m_batchsize*width,height,height)
+        #print(concate)
+        #print(att_H) 
+        att_W = concate[:,:,:,height:height+width].contiguous().view(m_batchsize*height,width,width)
+        out_H = torch.bmm(proj_value_H, att_H.permute(0, 2, 1)).view(m_batchsize,width,-1,height).permute(0,2,3,1)
+        out_W = torch.bmm(proj_value_W, att_W.permute(0, 2, 1)).view(m_batchsize,height,-1,width).permute(0,2,1,3)
+        #print(out_H.size(),out_W.size())
+        return self.gamma*(out_H + out_W) + x
+
+[B*W, H, C], [B*H, W, C] 와 같이 reshaping 한다음에 [bmm](https://kh-kim.gitbook.io/natural-language-processing-with-pytorch/00-cover-9/03-attention)하는식으로 접근한다.
+
+
+
+
+
+**Axial Transformer**
+
+
+
+
+
+
 
 
 
