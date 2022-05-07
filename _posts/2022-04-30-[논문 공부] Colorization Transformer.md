@@ -184,23 +184,19 @@ Criss-cross attention의 핵심 연산이라고 볼 수 있음. 어텐션 맵 ![
         #print(out_H.size(),out_W.size())
         return self.gamma*(out_H + out_W) + x
 
-[B*W, H, C], [B*H, W, C] 와 같이 reshaping 한다음에 [bmm](https://kh-kim.gitbook.io/natural-language-processing-with-pytorch/00-cover-9/03-attention)하는식으로 접근한다.
+[B*W, H, C'], [B*H, W, C'] 와 같이 reshaping 한다음에 [bmm](https://kh-kim.gitbook.io/natural-language-processing-with-pytorch/00-cover-9/03-attention)하는식으로 접근한다.
 
+![bmm]((/assets/posts/corolization_transformer/bmm.png)
 
+![crisscross01](/assets/posts/corolization_transformer/crisscross5.PNG)
 
+![crisscross02](/assets/posts/corolization_transformer/crisscross6.PNG)
 
+그려보면 이런식이라고 보면 된다. 
 
 **Axial Transformer**
 
-
-
-
-
-
-
-
-
-
+## 3. 논문의 개요
 
 
 
@@ -211,6 +207,8 @@ Criss-cross attention의 핵심 연산이라고 볼 수 있음. 어텐션 맵 ![
 - [Criss-Cross Network(Paper with Code)](https://paperswithcode.com/method/ccnet)
 
 - [Axial Attention(Paper with Code)](https://paperswithcode.com/method/axial)
+
+- [Natural Languate Processing with PyTorch, 03-attention](https://kh-kim.gitbook.io/natural-language-processing-with-pytorch/00-cover-9/03-attention)
 
 
 
