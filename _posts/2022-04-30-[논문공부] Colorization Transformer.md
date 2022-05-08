@@ -1,6 +1,4 @@
 ---
-toc: true
-toc_sticky: true
 layout: categories
 categories: 
     - "논문 공부"
@@ -8,6 +6,8 @@ tags:
     - "Computer Vision"
     - "Image Colorization"
     - "Generation Model"
+toc: true
+toc_sticky: true
 use_math: true
 comments: true
 ---
@@ -25,7 +25,6 @@ Image colorization 및 생성 모델 관련 논문은 처음 보는 것이라 �
 ## 1. 논문의 개요
 
 최근 Automated Image Colorization 방법들은 log-likelihood estimation에 기반한 neural generative approach가 대부분임. 
-
 
 #### 1.1 Neural generative approach-based Image Colorization Methods
 
@@ -58,15 +57,15 @@ Image colorization 및 생성 모델 관련 논문은 처음 보는 것이라 �
 
    테스트 시에는? 픽셀 순으로 sequantial 하게 진행.
 
-   먼저 입력된 $$X_L$$ 있으므로 ![x_1_variable](/assets/posts/colorization_transformer/eq_003.png)를 앞서 학습한 ![conditional_probability_of_Lchannel_to_ab_channel](/assets/posts/colorization_transformer/eq_004.png) 로부터 샘플링. 이후에도 연속적으로 모든 픽셀에 대해서 동일한 과정을 수행. 
+   먼저 입력된 $X_L$ 있으므로 ![x_1_variable](/assets/posts/colorization_transformer/eq_003.png)를 앞서 학습한 ![conditional_probability_of_Lchannel_to_ab_channel](/assets/posts/colorization_transformer/eq_004.png) 로부터 샘플링. 이후에도 연속적으로 모든 픽셀에 대해서 동일한 과정을 수행. 
 
    
    ![probabilistic_colorization](/assets/posts/colorization_transformer/probabilistic_colorization.png)
    <Figure 3.> Probabilistic Colorization.
 
-   전체 네트워크는 enbedding network ![ebmedding](/assets/posts/colorization_transformer/gw.png)와 autoregressive network ![autoregress](/assets/posts/colorization_transformer/f_theta.png)로 이루어져 있다. 
+   전체 네트워크는 enbedding network $g^w$와 autoregressive network $f^\theta$로 이루어져 있다. 
 
-   embedding netowrk ![ebmedding](/assets/posts/colorization_transformer/gw.png)는 일반적인 CNN이고, 핵심은 autoregressive network ![autoregress](/assets/posts/colorization_transformer/f_theta.png)이다. 이건 PixelCNN++이다. 
+   embedding netowrk $g^w$는 일반적인 CNN이고, 핵심은 autoregressive network $f^\theta$이다. 이건 PixelCNN++이다. 
 
    [PixelCNN](https://arxiv.org/pdf/1606.05328.pdf) 원 논문을 살펴보면, 
 
@@ -76,21 +75,21 @@ Image colorization 및 생성 모델 관련 논문은 처음 보는 것이라 �
 
    커널 안에서 다음 생성될 픽셀에 대해서, 0~255 사이의 값(8bit)로 softmax prediction 수행.
 
-   그러니까 일단 $$g_w$$로 파라미터라이제이션 하고 h에서 샘플링을 픽셀 by 픽셀로 연속적으로 해서 0~256사이의 값을 가지게 추정하고
+   그러니까 일단 $g^w$로 파라미터라이제이션 하고 샘플링을 픽셀 by 픽셀로 연속적으로 해서 0~256사이의 값을 가지게 추정하고
 
    Maximum likelihood를 향해 학습(negative loglikelihood minimization) 하겠다는것 같다. 
 
    그걸 다음 픽셀을 생성하면서 sequantial하게 연속적으로 conditional distribution을 정의하면서 말이다. 
 
-   crossentrophy loss 최적화 한다고 했으니 확률분포는 멀티누이 분포(Multinoulii distribution)를 가정했따는 말이고, 
+   crossentrophy loss 최적화 한다고 했으니 확률분포는 멀티누이 분포(Multinoulii distribution)를 가정했다는 말이겠고요.
 
-   그런 식으로!!! ![eq06](/assets/posts/colorization_transformer/eq_006.png) $$X^L$$ 로부터 $$X^(ab)$$를 prediction 한다. 
+   그런 식으로!!! ![eq06](/assets/posts/colorization_transformer/eq_006.png) $X^L$ 로부터 $X^{ab}$를 prediction 한다. 
 
    그거를 굳이 수식으로 쓰면 ![eq07](/assets/posts/colorization_transformer/eq_007.png) 이렇게 된다.
 
    그래서 논문에서 "The current state-of-the-art in automated colorization are neural generative approaches based on
 log-likelihood estimation" 라고 한것 같다. 
-   
+
    원리는 동일한데, PixelCNN+는 나중에 더 봐야할듯. 
 
    일단 Colorization transformer에서는 PixelCNN이 아니라 PixelCNN+를 사용하긴 했는데, 개념은 비슷하니 다음에 본 논문 다루어볼때 하기로 하고 이쯤 넘어가자... 
@@ -138,7 +137,7 @@ Axial transformer는 Criss-Cross 네트워크에 영감을 받아 시작되었�
 
 이를 극복하기 위한 방법은 [non-local](https://openaccess.thecvf.com/content_cvpr_2018/papers/Wang_Non-Local_Neural_Networks_CVPR_2018_paper.pdf) 모듈과 같이 attention을 이용해 모든 픽셀을 densely aggregation 하는 것이다. 
 
-그러나 이는 attention map을 모든 픽셀 끼리 연산해야 하기 때문에 연산 복잡도가 굉장히 크다 (O($$N^2$$))
+그러나 이는 attention map을 모든 픽셀 끼리 연산해야 하기 때문에 연산 복잡도가 굉장히 크다 (O($N^2$))
 
 (CCNet 논문에서는 이를 픽셀들을 node로 본 GNN(Graph Neural Network) 형태라고 설명)
 
