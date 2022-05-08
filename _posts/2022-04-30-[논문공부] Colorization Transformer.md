@@ -42,9 +42,9 @@ Image colorization 및 생성 모델 관련 논문은 처음 보는 것이라 �
 
    Conditional distribusion ![eq001](/assets/posts/colorization_transformer/eq_001.png)를 구하려면, 
    
-   X^L은 given이고, GT(X^ab)도 아니까 모델을 찾을수 있다는 말이고 모델을 찾기 위해서 Conditional distribution을 정의함.
+   $X^L$은 given이고, GT($X^(ab)$)도 아니까 모델을 찾을수 있다는 말이고 모델을 찾기 위해서 Conditional distribution을 정의함.
 
-   여기서는 X^ab의 픽셀 값을 이전 연구처럼 deterministic 하게 추정하지 않고 샘플링하는데, 즉 VAE 처럼 일단 파라미터라이제이션 하고 hidden에서 샘플링하는데, 이때 softmax로 0~255 사이의 값(8bit)을 뽑는다. continual이 아니기 때문에 log-likelihood estimation은 멀티누이 분포를 가정하고 했다는 말이다.    
+   여기서는 $X^(ab)$의 픽셀 값을 이전 연구처럼 deterministic 하게 추정하지 않고 샘플링하는데, 즉 VAE 처럼 일단 파라미터라이제이션 하고 hidden에서 샘플링하는데, 이때 softmax로 0~255 사이의 값(8bit)을 뽑는다. continual이 아니기 때문에 log-likelihood estimation은 멀티누이 분포를 가정하고 했다는 말이다.    
    
    Conditional distribution을 구할때는, 
 
@@ -56,7 +56,7 @@ Image colorization 및 생성 모델 관련 논문은 처음 보는 것이라 �
 
    테스트 시에는? 픽셀 순으로 sequantial 하게 진행.
 
-   먼저 입력된 X_L 있으므로 ![x_1_variable](/assets/posts/colorization_transformer/eq_003.png)를 앞서 학습한 ![conditional_probability_of_Lchannel_to_ab_channel](/assets/posts/colorization_transformer/eq_004.png) 로부터 샘플링. 이후에도 연속적으로 모든 픽셀에 대해서 동일한 과정을 수행. 
+   먼저 입력된 $X_L$ 있으므로 ![x_1_variable](/assets/posts/colorization_transformer/eq_003.png)를 앞서 학습한 ![conditional_probability_of_Lchannel_to_ab_channel](/assets/posts/colorization_transformer/eq_004.png) 로부터 샘플링. 이후에도 연속적으로 모든 픽셀에 대해서 동일한 과정을 수행. 
 
    
    ![probabilistic_colorization](/assets/posts/colorization_transformer/probabilistic_colorization.png)
@@ -74,7 +74,7 @@ Image colorization 및 생성 모델 관련 논문은 처음 보는 것이라 �
 
    커널 안에서 다음 생성될 픽셀에 대해서, 0~255 사이의 값(8bit)로 softmax prediction 수행.
 
-   그러니까 일단 gw로 파라미터라이제이션 하고 h에서 샘플링을 픽셀 by 픽셀로 연속적으로 해서 0~256사이의 값을 가지게 추정하고
+   그러니까 일단 $g_w$로 파라미터라이제이션 하고 h에서 샘플링을 픽셀 by 픽셀로 연속적으로 해서 0~256사이의 값을 가지게 추정하고
 
    Maximum likelihood를 향해 학습(negative loglikelihood minimization) 하겠다는것 같다. 
 
@@ -82,7 +82,7 @@ Image colorization 및 생성 모델 관련 논문은 처음 보는 것이라 �
 
    crossentrophy loss 최적화 한다고 했으니 확률분포는 멀티누이 분포(Multinoulii distribution)를 가정했따는 말이고, 
 
-   그런 식으로!!! ![eq06](/assets/posts/colorization_transformer/eq_006.png) X^L 로부터 X^ab를 prediction 한다. 
+   그런 식으로!!! ![eq06](/assets/posts/colorization_transformer/eq_006.png) $X^L$ 로부터 $X^(ab)$를 prediction 한다. 
 
    그거를 굳이 수식으로 쓰면 ![eq07](/assets/posts/colorization_transformer/eq_007.png) 이렇게 된다.
 
@@ -136,7 +136,7 @@ Axial transformer는 Criss-Cross 네트워크에 영감을 받아 시작되었�
 
 이를 극복하기 위한 방법은 [non-local](https://openaccess.thecvf.com/content_cvpr_2018/papers/Wang_Non-Local_Neural_Networks_CVPR_2018_paper.pdf) 모듈과 같이 attention을 이용해 모든 픽셀을 densely aggregation 하는 것이다. 
 
-그러나 이는 attention map을 모든 픽셀 끼리 연산해야 하기 때문에 연산 복잡도가 굉장히 크다 (O(N^2))
+그러나 이는 attention map을 모든 픽셀 끼리 연산해야 하기 때문에 연산 복잡도가 굉장히 크다 (O($N^2$))
 
 (CCNet 논문에서는 이를 픽셀들을 node로 본 GNN(Graph Neural Network) 형태라고 설명)
 
@@ -162,29 +162,28 @@ Criss-cross attention의 핵심 연산이라고 볼 수 있음. 어텐션 맵
 
 어떤식으로 하나 궁금해서 [공식 torch 구현](https://github.com/speedinghzl/CCNet/blob/master/cc_attention/functions.py)의 forward 부분만을 가져옴 
 
-     def forward(self, x):
-        m_batchsize, _, height, width = x.size()
-        proj_query = self.query_conv(x)
-        proj_query_H = proj_query.permute(0,3,1,2).contiguous().view(m_batchsize*width,-1,height).permute(0, 2, 1)
-        proj_query_W = proj_query.permute(0,2,1,3).contiguous().view(m_batchsize*height,-1,width).permute(0, 2, 1)
-        proj_key = self.key_conv(x)
-        proj_key_H = proj_key.permute(0,3,1,2).contiguous().view(m_batchsize*width,-1,height)
-        proj_key_W = proj_key.permute(0,2,1,3).contiguous().view(m_batchsize*height,-1,width)
-        proj_value = self.value_conv(x)
-        proj_value_H = proj_value.permute(0,3,1,2).contiguous().view(m_batchsize*width,-1,height)
-        proj_value_W = proj_value.permute(0,2,1,3).contiguous().view(m_batchsize*height,-1,width)
-        energy_H = (torch.bmm(proj_query_H, proj_key_H)+self.INF(m_batchsize, height, width)).view(m_batchsize,width,height,height).permute(0,2,1,3)
-        energy_W = torch.bmm(proj_query_W, proj_key_W).view(m_batchsize,height,width,width)
-        concate = self.softmax(torch.cat([energy_H, energy_W], 3))
+```python   
+def forward(self, x):
+   m_batchsize, _, height, width = x.size()
+   proj_query = self.query_conv(x)
+   proj_query_H = proj_query.permute(0,3,1,2).contiguous().view(m_batchsize*width,-1,height).permute(0, 2, 1)
+   proj_query_W = proj_query.permute(0,2,1,3).contiguous().view(m_batchsize*height,-1,width).permute(0, 2, 1)
+   proj_key = self.key_conv(x)
+   proj_key_H = proj_key.permute(0,3,1,2).contiguous().view(m_batchsize*width,-1,height)
+   proj_key_W = proj_key.permute(0,2,1,3).contiguous().view(m_batchsize*height,-1,width)
+   proj_value = self.value_conv(x)
+   proj_value_H = proj_value.permute(0,3,1,2).contiguous().view(m_batchsize*width,-1,height)
+   proj_value_W = proj_value.permute(0,2,1,3).contiguous().view(m_batchsize*height,-1,width)
+   energy_H = (torch.bmm(proj_query_H, proj_key_H)+self.INF(m_batchsize, height, width)).view(m_batchsize,width,height,height).permute(0,2,1,3)
+   energy_W = torch.bmm(proj_query_W, proj_key_W).view(m_batchsize,height,width,width)
+   concate = self.softmax(torch.cat([energy_H, energy_W], 3))
 
-        att_H = concate[:,:,:,0:height].permute(0,2,1,3).contiguous().view(m_batchsize*width,height,height)
-        #print(concate)
-        #print(att_H) 
-        att_W = concate[:,:,:,height:height+width].contiguous().view(m_batchsize*height,width,width)
-        out_H = torch.bmm(proj_value_H, att_H.permute(0, 2, 1)).view(m_batchsize,width,-1,height).permute(0,2,3,1)
-        out_W = torch.bmm(proj_value_W, att_W.permute(0, 2, 1)).view(m_batchsize,height,-1,width).permute(0,2,1,3)
-        #print(out_H.size(),out_W.size())
-        return self.gamma*(out_H + out_W) + x
+   att_H = concate[:,:,:,0:height].permute(0,2,1,3).contiguous().view(m_batchsize*width,height,height)
+   att_W = concate[:,:,:,height:height+width].contiguous().view(m_batchsize*height,width,width)
+   out_H = torch.bmm(proj_value_H, att_H.permute(0, 2, 1)).view(m_batchsize,width,-1,height).permute(0,2,3,1)
+   out_W = torch.bmm(proj_value_W, att_W.permute(0, 2, 1)).view(m_batchsize,height,-1,width).permute(0,2,1,3)
+   return self.gamma*(out_H + out_W) + x
+```
 
 [B*W, H, C'], [B*H, W, C'] 와 같이 reshaping 한다음에 [bmm](https://kh-kim.gitbook.io/natural-language-processing-with-pytorch/00-cover-9/03-attention)하는식으로 접근한다.
 
@@ -198,7 +197,7 @@ Criss-cross attention의 핵심 연산이라고 볼 수 있음. 어텐션 맵
 
 **Axial Transformer**
 
-## 3. 논문의 개요
+
 
 
 
