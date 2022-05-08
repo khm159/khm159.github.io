@@ -8,6 +8,8 @@ tags:
     - "Computer Vision"
     - "Image Colorization"
     - "Generation Model"
+use_math: true
+comments: true
 ---
 
 # Colorization Transformer
@@ -42,9 +44,9 @@ Image colorization 및 생성 모델 관련 논문은 처음 보는 것이라 �
 
    Conditional distribusion ![eq001](/assets/posts/colorization_transformer/eq_001.png)를 구하려면, 
    
-   $$ X^L $$은 given이고, GT($$X^{ab}$$)도 아니까 모델을 찾을수 있다는 말이고 모델을 찾기 위해서 Conditional distribution을 정의함.
+   $X^L$은 given이고, GT($X^{ab}$)도 아니까 모델을 찾을수 있다는 말이고 모델을 찾기 위해서 Conditional distribution을 정의함.
 
-   여기서는 $$X^(ab)$$의 픽셀 값을 이전 연구처럼 deterministic 하게 추정하지 않고 샘플링하는데, 즉 VAE 처럼 일단 파라미터라이제이션 하고 hidden에서 샘플링하는데, 이때 softmax로 0~255 사이의 값(8bit)을 뽑는다. continual이 아니기 때문에 log-likelihood estimation은 멀티누이 분포를 가정하고 했다는 말이다.    
+   여기서는 $X^{ab}$의 픽셀 값을 이전 연구처럼 deterministic 하게 추정하지 않고 샘플링하는데, 즉 VAE 처럼 일단 파라미터라이제이션 하고 hidden에서 샘플링하는데, 이때 softmax로 0~255 사이의 값(8bit)을 뽑는다. continual이 아니기 때문에 log-likelihood estimation은 멀티누이 분포를 가정하고 했다는 말이다.    
    
    Conditional distribution을 구할때는, 
 
